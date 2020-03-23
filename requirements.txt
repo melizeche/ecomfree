@@ -1,3 +1,2 @@
 django~=2.2
-bpython==0.18
 Pillow==7.0.0
