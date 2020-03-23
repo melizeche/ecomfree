@@ -23,5 +23,6 @@ from store import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
-    path('buscar/<str:termino>', views.buscar)
+    path('buscar/<str:termino>', views.buscar),
+    path('productos/<int:id_producto>', views.detalle_producto),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
