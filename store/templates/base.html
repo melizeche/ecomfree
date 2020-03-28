@@ -33,6 +33,7 @@
             }
         }
     </style>
+     {% load humanize %}
 </head>
 
 <body>
@@ -78,20 +79,25 @@
                     </div>
                 </div>
             </div>
-            {% comment %}
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
+                    {% if not peticion.user.is_authenticated %}
+                        <a href="/registro" class="button is-primary">
+                            <strong>Registarse</strong>
                         </a>
-                        <a class="button is-light">
-                            Log in
+                        <a href="/acceder" class="button is-light">
+                            Iniciar sesión
                         </a>
+                    {% else %}
+                    {{ info.saludo|capfirst }}, {{peticion.user}}
+                        <a href="/salir" class="button is-light">
+                            Cerrar sesión
+                        </a>
+                    {% endif %}
                     </div>
                 </div>
             </div>
-            {% endcomment %}
         </div>
     </nav>
 
