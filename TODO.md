@@ -4,6 +4,8 @@ Si o si
 * Mejorar la interfaz
 * Interfaz para crear usuarios
 * configurar static files
+* Completar los links de navegacion
+* buscar por categoria
 
 
 Opcionales
