@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Tipo(models.Model):
-    codigo = models.CharField(max_length=20)
+    codigo = models.CharField(max_length=20, unique=True)
     descripcion = models.CharField(max_length=50)
 
     def __str__(self):
@@ -28,7 +28,21 @@ class Empresa(models.Model):
     instagram = models.URLField(null=True, blank=True)
     color_primario = models.CharField(max_length=7, default='#000000')
     color_secundario = models.CharField(max_length=7, default='#FFFFFF')
+    saludo = models.CharField(max_length=20, default="Jaumina", null=True, blank=True)
 
     def __str__(self):
         return self.nombre
+
+
+class Carrito(models.Model):
+    usuario = models.OneToOneField("usuarios.perfil", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Carrito de {self.usuario}'
+
+
+class ItemCarrito(models.Model):
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
+    cantidad = models.IntegerField(default=1)
     

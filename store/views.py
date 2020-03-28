@@ -6,9 +6,17 @@ from .models import Articulo, Empresa
 # Create your views here.
 
 def home(request):
+    print("El print del request", request)
+    print(type(request))
+    print(dir(request))
+    print("El metodo http es", request.method)
+    print("request.user==",request.user)
+    print("----------------")
+    print(dir(request.user))
+    print("el objeto request.user tiene el atributo/metodo is_authenticated==", request.user.is_authenticated)
     libros = Articulo.objects.all()
     empresa = Empresa.objects.first()
-    contexto = {'lista':libros, 'info':empresa}
+    contexto = {'lista':libros, 'info':empresa, 'peticion':request}
     
     return render(request, 'lista_articulos.html', contexto)
 
