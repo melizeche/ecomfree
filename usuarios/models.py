@@ -1,5 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from store.models import Carrito
 
 
 # Create your models here.
@@ -34,7 +38,7 @@ class Perfil(models.Model):
 
     @property
     def nombre_completo(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'UserId {self.user.id}: {self.user.first_name} {self.user.last_name}'
 
     def __str__(self):
         return self.nombre_completo
@@ -45,4 +49,13 @@ class Perfil(models.Model):
 
      
 
+@receiver(post_save, sender=Perfil)
+def crear_carrito(sender, instance, created, **kwargs):
+    if created:
+        Carrito.objects.create(usuario=instance)
 
+@receiver(post_save, sender=User)
+def crear_perfil(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(user=instance)
+    #instance.perfil.save()

@@ -1,16 +1,20 @@
 Si o si
 * Crear Pedido
-* Carrito
+* ~~Crear Carrito~~
+* cargar carrito
 * Mejorar la interfaz
-* Interfaz para crear usuarios
+* Interfaz para crear usuarios (mas o menos ya anda pero es horrible)
 * configurar static files
 * Completar los links de navegacion
 * buscar por categoria
+* Sign Up With Confirmation Mail
+* ~~Arreglar vistas post login, post logout~~
+* username==email
 
 
 Opcionales
 
 * Tamaño maximo de fotos, renombrar y resizing de fotos
 * Generar Thumbnails
-* Separador de miles
+* ~~Separador de miles~~
 * GeoDjango en direcciones, lat long
