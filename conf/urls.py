@@ -18,11 +18,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from store import views
+from django.contrib.auth import views as auth_views
+from store import views as views_store
+from usuarios import views as views_usuarios
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home),
-    path('buscar/<str:termino>', views.buscar),
-    path('productos/<int:id_producto>', views.detalle_producto),
+    path('', views_store.home, name='inicio'),
+    path('buscar/<str:termino>', views_store.buscar),
+    path('productos/<int:id_producto>', views_store.detalle_producto),
+    path('registro', views_usuarios.registar, name='registro'),
+    path('acceder', auth_views.LoginView.as_view(), name='login'),
+    path('salir', auth_views.LogoutView.as_view(), name='logout'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
