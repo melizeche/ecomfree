@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views_store.home, name='inicio'),
     path('buscar/<str:termino>', views_store.buscar),
+    path('categoria/<str:cat>', views_store.buscar_categoria),
     path('productos/<int:id_producto>', views_store.detalle_producto),
     path('registro', views_usuarios.registar, name='registro'),
     path('acceder', auth_views.LoginView.as_view(), name='login'),

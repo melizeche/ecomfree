@@ -26,6 +26,12 @@ def buscar(request, termino):
     contexto = {'lista':resultado, 'info':empresa}
     return render(request, 'lista_articulos.html', contexto)
 
+def buscar_categoria(request, cat):
+    resultado = Articulo.objects.filter(tipo__codigo=cat)
+    empresa = Empresa.objects.first()
+    contexto = {'lista':resultado, 'info':empresa}
+    return render(request, 'lista_articulos.html', contexto)
+
 def detalle_producto(request, id_producto):
     producto = get_object_or_404(Articulo, pk=id_producto)
     empresa = Empresa.objects.first()
