@@ -1,29 +1,29 @@
 {% extends  'base.html' %}
+{%block search%}{%endblock search%}
 {% block contenido %}
- <!-- Developers -->
-            <div class="row columns is-centered">
-                <div class="column is-half">
-                    <div class="card large">
-                        <div class="card-image">
-                            <figure class="image">
-                                <img src="/media/{{articulo.imagen}}" alt="Image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4 no-padding"> {{ articulo.nombre }}</p>
-                                    <p><span class="title is-6">Precio: {{articulo.precio }} </span></p>
-                                </div>
-                            </div>
-                            <div class="content">
-                                {{articulo.descripcion}}
-                                <div class="background-icon"></div>
-                            </div>
-                        </div>
+<!-- Developers -->
+<div class="row columns is-centered">
+    <div class="column is-half">
+        <div class="card large">
+            <div class="card-image">
+                <figure class="image">
+                    <img src="/media/{{articulo.imagen}}" alt="Image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4 no-padding"> {{ articulo.nombre }}</p>
+                        <p><span class="title is-6">Precio: {{articulo.precio }} </span></p>
                     </div>
                 </div>
-
+                <div class="content">
+                    {{articulo.descripcion}}
+                    <div class="background-icon"></div>
+                </div>
             </div>
-            <!-- End Developers -->
+        </div>
+    </div>
+</div>
+<!-- End Developers -->
 {% endblock %}

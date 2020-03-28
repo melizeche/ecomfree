@@ -1,31 +1,47 @@
 {% extends  'base.html' %}
 {% block contenido %}
- <!-- Developers -->
-            <div class="row columns">
-            {% for articulo in lista %}
-                <div class="column is-one-third">
-                    <div class="card large">
-                        <div class="card-image">
-                            <figure class="image">
-                                <a href="/productos/{{articulo.id}}"><img src="/media/{{articulo.imagen}}" alt="Image"></a>
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4 no-padding"> {{ articulo.nombre }}</p>
-                                    <p><span class="title is-6">Precio: {{articulo.precio }} </span></p>
-                                </div>
-                            </div>
-                            <div class="content">
-                                {{articulo.descripcion}}
-                                <div class="background-icon"><span class="icon-twitter"></span></div>
-                            </div>
-                        </div>
+<!-- Developers -->
+<div class="row columns is-multiline">
+    {% for articulo in lista %}
+    <div class="column is-one-third">
+        <article class="box">
+            <div class="media center">
+                <figure class="media-left">
+                    <a href="/productos/{{articulo.id}}">
+                        <img width="80" src="/media/{{articulo.imagen}}" alt="Image">
+                    </a>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <h2 class="title is-4 is-text-weight-bold"> {{ articulo.nombre }}</h2>
+                        <h3 class="subtitle is-5">
+                            <span class="icon has-text-success is-small">
+                                <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+                            </span>
+                            {{articulo.precio }}</h3>
+                        <a href="#" class="button ecom-card__button is-success is-light is-pulled-left">
+                            <span style="margin-right: .25rem;" class="icon has-text-success is-small">
+                                <i class="fas fa-cart-plus" aria-hidden="true"></i>
+                            </span>Añadir al carrito</a>
                     </div>
                 </div>
-            {% endfor %}
-
             </div>
-            <!-- End Developers -->
+            <div class="content ecom-card__desc">
+                <p class="is-6">
+                    {{articulo.descripcion|slice:"300"}}...
+                </p>
+            </div>
+            <div class="is-clearfix">
+                <a href="/productos/{{articulo.id}}"
+                    class="button ecom-card__button is-clearfix is-info is-light is-fullwidth is-pulled-left"><span
+                        style="margin-right: .25rem;" class="icon has-text-info is-small">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                    </span>Ver más
+                    detalles</a>
+            </div>
+        </article>
+    </div>
+    {% endfor %}
+</div>
+<!-- End Developers -->
 {% endblock %}
