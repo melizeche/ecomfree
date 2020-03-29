@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
 
 from .models import Articulo, Empresa
 
@@ -21,10 +20,16 @@ def home(request):
     return render(request, 'lista_articulos.html', contexto)
 
 def buscar(request, termino):
-    resultado = Articulo.objects.filter(nombre__icontains=termino)
+    if termino != -99:
+        resultado = Articulo.objects.filter(nombre__icontains=termino)
+    else:
+        resultado = Articulo.objects.all()
     empresa = Empresa.objects.first()
-    contexto = {'lista':resultado, 'info':empresa}
+    contexto = {'lista': resultado, 'info': empresa, 'termino': termino}
     return render(request, 'lista_articulos.html', contexto)
+
+def buscarSinTermino(request):
+    return buscar(request, -99)
 
 def buscar_categoria(request, cat):
     resultado = Articulo.objects.filter(tipo__codigo=cat)
