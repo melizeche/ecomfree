@@ -25,6 +25,7 @@ from usuarios import views as views_usuarios
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views_store.home, name='inicio'),
+    path('buscar/', views_store.buscarSinTermino),
     path('buscar/<str:termino>', views_store.buscar),
     path('categoria/<str:cat>', views_store.buscar_categoria),
     path('productos/<int:id_producto>', views_store.detalle_producto),

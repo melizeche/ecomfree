@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ info.nombre }}</title>
-    <meta http-equiv="title" content="{{info.nombre}}">
-    <meta name="description" content="{{info.slogan}}">
+    <meta http-equiv="title" content="{{ info.nombre }}">
+    <meta name="description" content="{{ info.slogan }}">
     <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css"/>
     <!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
     <script src="https://kit.fontawesome.com/3a940df15c.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .is-paddingless-horizontal {
             padding-right: 0;
@@ -33,55 +34,55 @@
             }
         }
     </style>
-     {% load humanize %}
+    {% load humanize %}
 </head>
 
 <body>
 
-    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-                <img src="/media/{{info.logo}}" height="28" alt="{{info.nombre}} Logo">
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="/media/{{ info.logo }}" height="28" alt="{{ info.nombre }} Logo">
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+           data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <div class="navbar-start">
+
+            <a href="/categoria/libros" class="navbar-item">
+                Libros
             </a>
 
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
+            <a href="movies" class="navbar-item">
+                Películas
             </a>
-        </div>
 
-        <div class="navbar-menu">
-            <div class="navbar-start">
-
-                <a href="/categoria/libros" class="navbar-item">
-                    Libros
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Más
                 </a>
 
-                <a href="movies" class="navbar-item">
-                    Películas
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Más
+                <div class="navbar-dropdown">
+                    <a class="navbar-item">
+                        Juegos
                     </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            Juegos
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item">
-                            Sobre {{info.nombre}}
-                        </a>
-                    </div>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item">
+                        Sobre {{ info.nombre }}
+                    </a>
                 </div>
             </div>
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
                     {% if not peticion.user.is_authenticated %}
                         <a href="/registro" class="button is-primary">
                             <strong>Registarse</strong>
@@ -90,91 +91,113 @@
                             Iniciar sesión
                         </a>
                     {% else %}
-                    {{ info.saludo|capfirst }}, {{peticion.user}}
+                        {{ info.saludo|capfirst }}, {{ peticion.user }}
                         <a href="/salir" class="button is-light">
                             Cerrar sesión
                         </a>
                     {% endif %}
-                    </div>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div class="container">
+<div class="container">
 
-        <div id="flow">
-            <span class="flow-1"></span>
-            <span class="flow-2"></span>
-            <span class="flow-3"></span>
-        </div>
+    <div id="flow">
+        <span class="flow-1"></span>
+        <span class="flow-2"></span>
+        <span class="flow-3"></span>
+    </div>
 
-        <div class="section">
-            {% block search %}
+    <div class="section">
+        {% block search %}
             <div class="container ecom-bg__primary">
-                <form method="get" action="/buscar/" onsubmit="return false;" class="control is-expanded">
+                <form id="form-busqueda" method="get" action="/buscar/" onsubmit="return false;"
+                      class="control is-expanded">
                     <div class="notification columns">
                         <div class="column is-four-fifths">
-                            <input type="search" name="q" class="input" placeholder="Buscar...">
+                            <input type="search" id="q" name="q" class="input" placeholder="Buscar..."
+                                    {% if termino != -99 %}  value="{{ termino }}" {% endif %}
+                                    {% if termino == -99 %}  value="" {% endif %}
+                            >
                         </div>
                         <div class="column is-one-fifth">
-                            <input type="submit" class="button is-fullwidth is-info is-one-third"
-                                onclick="window.location.href=this.form.action + this.form.q.value;" value="Buscar">
+                            <input id="btnBuscar" type="submit" class="button is-fullwidth is-info is-one-third"
+                                   value="Buscar">
                         </div>
                     </div>
                 </form>
             </div>
-            {% endblock search%}
-        </div>
-        <div class="section">
-            {% block contenido %}
-            {% endblock contenido%}
+        {% endblock search %}
+    </div>
+    <div class="section">
+        {% block contenido %}
+        {% endblock contenido %}
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="content has-text-centered">
+            <div class="soc">
+                <a href="{{ info.instagram }}"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+                <a href="{{ info.facebook }}"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+            </div>
+            <p>
+                <strong>Bulma</strong> by <a href="http://jgthms.com">Jeremy Thomas</a>.
+                The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. <br>
+            </p>
         </div>
     </div>
+</footer>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="content has-text-centered">
-                <div class="soc">
-                    <a href="{{info.instagram}}"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
-                    <a href="{{info.facebook}}"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
-                </div>
-                <p>
-                    <strong>Bulma</strong> by <a href="http://jgthms.com">Jeremy Thomas</a>.
-                    The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. <br>
-                </p>
-            </div>
-        </div>
-    </footer>
+<script>
+    //Hamgurger menu
+    document.addEventListener('DOMContentLoaded', () => {
 
-    <script>
-        //Hamgurger menu
-        document.addEventListener('DOMContentLoaded', () => {
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-            // Get all "navbar-burger" elements
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
 
-            // Check if there are any navbar burgers
-            if ($navbarBurgers.length > 0) {
+            // Add a click event on each of them
+            $navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
 
-                // Add a click event on each of them
-                $navbarBurgers.forEach(el => {
-                    el.addEventListener('click', () => {
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
 
-                        // Get the target from the "data-target" attribute
-                        const target = el.dataset.target;
-                        const $target = document.getElementById(target);
+                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
 
-                        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                        el.classList.toggle('is-active');
-                        $target.classList.toggle('is-active');
-
-                    });
                 });
-            }
+            });
+        }
 
+        function realizarBusqueda(termino) {
+            if (termino === "") {
+                window.location.href = $("#form-busqueda").attr('action');
+            } else {
+                window.location.href = $("#form-busqueda").attr('action') + termino;
+            }
+        }
+
+        $("#q").on('search', function () {
+            let termino = $(this).val();
+            realizarBusqueda(termino);
         });
-    </script>
+
+        $("#btnBuscar").on('click', function () {
+            let termino = $("#q").val();
+            realizarBusqueda(termino);
+        });
+
+    });
+</script>
 
 
 </body>
